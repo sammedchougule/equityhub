@@ -1,89 +1,3 @@
-// // src/StockData.js
-// import React, { useEffect, useState } from 'react';
-
-// const StockData = () => {
-//     const [stockData, setStockData] = useState(null);
-//     const [loading, setLoading] = useState(true);
-//     const [error, setError] = useState(null);
-
-//     useEffect(() => {
-//         // Fetch data from data.json
-//         const fetchData = async () => {
-//             try {
-//                 const response = await fetch('/data.json'); // Fetch from public folder
-//                 console.log('Response status:', response.status); // Log response status
-//                 if (!response.ok) {
-//                     throw new Error('Network response was not ok');
-//                 }
-//                 const data = await response.json();
-//                 console.log('Fetched data:', data); // Log the fetched data
-//                 setStockData(data); // Set the fetched data
-//             } catch (err) {
-//                 setError(err.message);
-//             } finally {
-//                 setLoading(false);
-//             }
-//         };
-
-//         fetchData(); // Call the function to fetch data
-//     }, []); // Empty dependency array means this runs once when the component mounts
-
-//     if (loading) return <div>Loading...</div>; // Loading state
-//     if (error) return <div>Error: {error}</div>; // Error state
-
-//     // Destructure the data for easier access
-//     const {
-//         stock,
-//         stock_name,
-//         industry,
-//         sector,
-//         exchange,
-//         close_yest,
-//         price_open,
-//         price,
-//         low,
-//         high,
-//         chg_rs,
-//         chg_percentage,
-//         volume,
-//         avg_volume,
-//         volume_spike,
-//         // month_high,
-//         // month_low,
-//         // year_high,
-//         // year_low,
-//         marketcap,
-//         // year_price_history
-//     } = stockData;
-
-//     return (
-//         <div className="stock-data">
-//             <h1>{stock_name} ({stock})</h1>
-//             <p><strong>Industry:</strong> {industry}</p>
-//             <p><strong>Sector:</strong> {sector}</p>
-//             <p><strong>Exchange:</strong> {exchange}</p>
-//             <p><strong>Last Close Price:</strong> ₹{close_yest}</p>
-//             <p><strong>Open Price:</strong> ₹{price_open}</p>
-//             <p><strong>Current Price:</strong> ₹{price}</p>
-//             <p><strong>Low:</strong> ₹{low}</p>
-//             <p><strong>High:</strong> ₹{high}</p>
-//             <p><strong>Change (₹):</strong> {chg_rs}</p>
-//             <p><strong>Change (%):</strong> {chg_percentage}</p>
-//             <p><strong>Volume:</strong> {volume}</p>
-//             <p><strong>Average Volume:</strong> {avg_volume}</p>
-//             <p><strong>Volume Spike:</strong> {volume_spike}</p>
-//             <p><strong>Market Cap:</strong> ₹{marketcap} Crores</p>
-//         </div>
-//     );
-// };
-
-// export default StockData;
-
-
-
-
-// TODO: ANOTHER DASHBAORD 
-
 import React, { useEffect, useState } from 'react';
 
 
@@ -119,7 +33,7 @@ const StockData = () => {
     <div className="bg-gray-200 p-8 min-h-screen">
       <h2 className="text-4xl font-bold mb-8 text-gray-800">High Volume Dashboard</h2>
 
-      <div className="grid grid-cols-5 gap-4  px-40">
+      <div className="grid grid-cols-6 gap-4  px-60">
         {stockData.map((stock, index) => (
           <div
             key={index}

@@ -116,7 +116,7 @@ const scrapeData = async () => {
     });
   });
 
-  const firstObject = data.slice(1,11);
+  const firstObject = data.slice(1,13);
 
   // Save the data to a JSON file
   fs.writeFileSync('public/data.json', JSON.stringify(firstObject, null, 2), 'utf8');
