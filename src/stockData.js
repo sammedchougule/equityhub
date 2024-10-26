@@ -119,3 +119,6 @@ const StockData = () => {
 };
 
 export default StockData;
+
+
+
