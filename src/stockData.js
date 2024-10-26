@@ -37,7 +37,7 @@ const StockData = () => {
     <div className="bg-gray-200 p-8 min-h-screen">
       <h2 className="text-4xl font-bold mb-8 text-gray-800 text-center">High Volume Dashboard</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 px-4 sm:px-10 lg:px-60">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 px-4 sm:px-10 lg:px-60">
         {stockData.slice(0, visibleCount).map((stock, index) => (
           <div
             key={index}
