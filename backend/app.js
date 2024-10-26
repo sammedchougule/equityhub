@@ -9,8 +9,7 @@ app.use(cors()); // Enable CORS for all routes
 
 app.get("/api/stock-data", async (req, res) => {
   try {
-    console.log('fetching');
-    
+
     const url =
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvDTIRMVVztLtR70Sqf2MPKNNm6rXbPDqAVnyC6jSM9ZnVmAF9HXItfkSYq3G2Eg/pubhtml?gid=137035160&single=true";
     const browser = await puppeteer.launch({ headless: true });
@@ -34,13 +33,9 @@ app.get("/api/stock-data", async (req, res) => {
     });
 
     await browser.close();
-    console.log("fetched");
-    console.log(data);
     
-    res.json(data); // Send only the first 52 items
+    res.json(data);
   } catch (error) {
-    console.log("error");
-    console.log(error);
     res.status(500).json({ error: "Failed to scrape data" });
   }
 });
