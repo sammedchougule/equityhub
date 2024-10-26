@@ -3,12 +3,16 @@ import React, { useEffect, useState } from 'react';
 const StockData = () => {
   const [stockData, setStockData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(10); // State to control how many stocks to show
+  const [visibleCount, setVisibleCount] = useState(() => {
+    // Get the count from local storage, or default to 10
+    const savedCount = localStorage.getItem('visibleCount');
+    return savedCount ? parseInt(savedCount, 10) : 10;
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/data.json?timestamp=${new Date().getTime()}`, {
+        const response = await fetch(`data/data.json?timestamp=${new Date().getTime()}`, {
           cache: 'no-cache'
         });
         if (!response.ok) {
@@ -27,17 +31,29 @@ const StockData = () => {
   }, []);
 
   const handleViewMore = () => {
-    setVisibleCount((prevCount) => prevCount + 10); // Increase visible count by 10
+    setVisibleCount((prevCount) => {
+      const newCount = prevCount + 10; // Increase visible count by 10
+      localStorage.setItem('visibleCount', newCount); // Store new count in local storage
+      return newCount;
+    });
+  };
+
+  const handleViewLess = () => {
+    setVisibleCount((prevCount) => {
+      const newCount = Math.max(prevCount - 10, 10); // Decrease visible count by 10 but keep it at least 10
+      localStorage.setItem('visibleCount', newCount); // Store new count in local storage
+      return newCount;
+    });
   };
 
   if (loading) return <div>Loading...</div>;
   if (!stockData.length) return <div>No data available</div>;
 
   return (
-    <div className="bg-gray-200 p-8 min-h-screen">
-      <h2 className="text-4xl font-bold mb-8 text-gray-800 text-center">Volume Dashboard</h2>
+    <div className="min-h-screen p-8 bg-gray-200">
+      <h2 className="mb-8 text-4xl font-bold text-center text-gray-800">High Volume Dashboard</h2>
 
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 px-4 sm:px-10 lg:px-60">
+      <div className="grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 sm:px-10 lg:px-60">
         {stockData.slice(0, visibleCount).map((stock, index) => (
           <div
             key={index}
@@ -55,13 +71,13 @@ const StockData = () => {
             </span>
 
             {/* Stock Name */}
-            <h3 className="text-lg font-semibold mt-6 text-left">{stock.stock_name}</h3>
+            <h3 className="mt-6 text-lg font-semibold text-left">{stock.stock_name}</h3>
 
             {/* Stock Price */}
-            <p className="text-3xl font-bold mt-2 text-left">₹{stock.price}</p>
+            <p className="mt-2 text-3xl font-bold text-left">₹{stock.price}</p>
 
             {/* Change Percentage */}
-            <div className="mt-2 flex">
+            <div className="flex mt-2">
               <div
                 className={`text-sm font-semibold px-2 py-1 rounded-full ${
                   stock.chg_percentage > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
@@ -79,7 +95,13 @@ const StockData = () => {
       {visibleCount < stockData.length && (
         <div className="flex justify-center mt-8">
           <button
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="px-4 py-2 mr-4 text-white bg-gray-600 rounded hover:bg-red-600"
+            onClick={handleViewLess}
+          >
+            View Less
+          </button>
+          <button
+            className="px-4 py-2 text-white bg-gray-600 rounded hover:bg-green-600"
             onClick={handleViewMore}
           >
             View More
