@@ -116,10 +116,10 @@ const scrapeData = async () => {
     });
   });
 
-  const firstObject = data.slice(1,53);
+  const firstObject = data.slice(1,103);
 
   // Save the data to a JSON file
-  fs.writeFileSync('public/data.json', JSON.stringify(firstObject, null, 2), 'utf8');
+  fs.writeFileSync('public/data/data.json', JSON.stringify(firstObject, null, 2), 'utf8');
   console.log(`Data fetched at ${new Date().toLocaleTimeString()} and saved to data.json: `, firstObject);
 
   lastFetchedData = firstObject; // Store the last fetched data
