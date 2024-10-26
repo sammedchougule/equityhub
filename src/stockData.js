@@ -86,6 +86,7 @@
 
 import React, { useEffect, useState } from 'react';
 
+
 const StockData = () => {
   const [stockData, setStockData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -115,20 +116,49 @@ const StockData = () => {
   if (!stockData.length) return <div>No data available</div>;
 
   return (
-    <div>
-      <h2>Stock Data</h2>
-      {stockData.map((stock, index) => (
-        <div key={index} style={{ marginBottom: '20px', border: '1px solid #ddd', padding: '10px' }}>
-          <h3>{stock.stock_name} ({stock.stock})</h3>
-          <p>Industry: {stock.industry}</p>
-          <p>Sector: {stock.sector}</p>
-          <p>Exchange: {stock.exchange}</p>
-          <p>Closing Price: ₹ {stock.close_yest}</p>
-          <p>Current Price: ₹ {stock.price}</p>
-          <p>Change (Rs): ₹ {stock.chg_rs}</p>
-          <p>Change (%): {stock.chg_percentage}%</p>
-        </div>
-      ))}
+    <div className="bg-gray-200 p-8 min-h-screen">
+      <h2 className="text-4xl font-bold mb-8 text-gray-800">High Volume Dashboard</h2>
+
+      <div className="grid grid-cols-5 gap-4  px-40">
+        {stockData.map((stock, index) => (
+          <div
+            key={index}
+            className={`p-4 bg-white rounded-lg shadow-lg border-b-4 ${
+              stock.chg_percentage > 0 ? 'border-green-500' : 'border-red-500'
+            } relative`}
+          >
+            {/* Stock Ticker */}
+            <span
+              className={`text-xs font-bold px-2 py-1 rounded text-white absolute top-2 left-2 ${
+                stock.chg_percentage > 0 ? 'bg-green-600' : 'bg-red-600'
+              }`}
+            >
+              {stock.stock}
+            </span>
+
+            {/* Stock Name */}
+            <h3 className="text-lg font-semibold mt-6 text-left">{stock.stock_name}</h3>
+
+            {/* Stock Price */}
+            <p className="text-3xl font-bold mt-2 text-left">₹{stock.price}</p>
+
+            {/* Change Percentage */}
+            <div className="mt-2 flex">
+              <div
+                className={` text-sm font-semibold px-2 py-1 rounded-full ${
+                  stock.chg_percentage > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                }`}
+              >
+                <span className="mr-1">{stock.chg_percentage > 0 ? '▲' : '▼'}</span>
+                <span>{Math.abs(stock.chg_percentage)}%</span>
+              </div>
+            </div>
+
+
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };
