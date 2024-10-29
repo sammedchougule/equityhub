@@ -15,7 +15,7 @@ const StockFilters = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="flex items-center justify-between mb-4">
+    <div className="flex items-center mt-4 mb-4 justify-evenly">
       <div className="flex items-center">
         <label className="mr-2">Price:</label>
         <select

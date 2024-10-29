@@ -41,12 +41,12 @@ const StockDashboard = ({ stockData = [] }) => {
                 isPositive ? 'border-green-500' : 'border-red-500'
               } relative flex flex-col justify-between overflow-hidden
                 basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5`}
-              style={{ height: '300px' }}
+              style={{ height: '150px' }}
             >
               {/* Stock Ticker */}
               <span
                 aria-label={`${stock.stock} ticker`}
-                className={`text-xs font-bold px-2 py-1 rounded text-white absolute top-2 left-12 ${
+                className={`text-xs font-bold px-2 py-1 rounded text-white absolute top-2  ${
                   isPositive ? 'bg-green-600' : 'bg-red-600'
                 }`}
               >
