@@ -58,7 +58,7 @@ const StockData = () => {
             <h3 className="mt-6 text-lg font-semibold text-left truncate">{stock.stock_name}</h3>
 
             {/* Stock Price */}
-            <p className="mt-2 text-3xl font-bold text-left">₹{stock.price}</p>
+            <p className="mt-2 text-xl font-bold text-left">₹{stock.price}</p>
 
             {/* Change Percentage */}
             <div className="flex mt-2">
