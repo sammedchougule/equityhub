@@ -116,10 +116,10 @@ const scrapeData = async () => {
     });
   });
 
-  const firstObject = data.slice(1,53);
+  const firstObject = data.slice(1, 53);
 
   // Save the data to a JSON file
-  fs.writeFileSync('public/data.json', JSON.stringify(firstObject, null, 2), 'utf8');
+  fs.writeFileSync('public/data/data.json', JSON.stringify(firstObject, null, 2), 'utf8');
   console.log(`Data fetched at ${new Date().toLocaleTimeString()} and saved to data.json: `, firstObject);
 
   lastFetchedData = firstObject; // Store the last fetched data
@@ -127,8 +127,13 @@ const scrapeData = async () => {
   await browser.close();
 };
 
-// Initial scrape without checking market hours
+// Run scrapeData initially and then every 1 minute
 scrapeData();
+intervalId = setInterval(scrapeData, 60000); // 60000 ms = 1 minute
+
+// Optionally, add code to clear interval if needed
+// clearInterval(intervalId);
+
 
 
 
