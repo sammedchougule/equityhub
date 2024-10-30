@@ -3,11 +3,7 @@ import React, { useEffect, useState } from 'react';
 const StockData = () => {
   const [stockData, setStockData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(() => {
-    // Get the count from local storage, or default to 10
-    const savedCount = localStorage.getItem('visibleCount');
-    return savedCount ? parseInt(savedCount, 10) : 10;
-  });
+  const [visibleCount, setVisibleCount] = useState(10); // State to control how many stocks to show
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,19 +27,7 @@ const StockData = () => {
   }, []);
 
   const handleViewMore = () => {
-    setVisibleCount((prevCount) => {
-      const newCount = prevCount + 10; // Increase visible count by 10
-      localStorage.setItem('visibleCount', newCount); // Store new count in local storage
-      return newCount;
-    });
-  };
-
-  const handleViewLess = () => {
-    setVisibleCount((prevCount) => {
-      const newCount = Math.max(prevCount - 10, 10); // Decrease visible count by 10 but keep it at least 10
-      localStorage.setItem('visibleCount', newCount); // Store new count in local storage
-      return newCount;
-    });
+    setVisibleCount((prevCount) => prevCount + 10); // Increase visible count by 10
   };
 
   if (loading) return <div>Loading...</div>;
@@ -53,61 +37,49 @@ const StockData = () => {
     <div className="min-h-screen p-8 bg-gray-200">
       <h2 className="mb-8 text-4xl font-bold text-center text-gray-800">High Volume Dashboard</h2>
 
-      <div className="flex flex-wrap justify-center gap-4 px-4 sm:px-4 lg:px-32">
-          {stockData.slice(0, visibleCount).map((stock, index) => {
-            const isPositive = stock.chg_percentage > 0;
-            return (
+      <div className="grid grid-cols-2 gap-4 px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 sm:px-10 lg:px-60">
+        {stockData.slice(0, visibleCount).map((stock, index) => (
+          <div
+            key={index}
+            className={`p-4 bg-white rounded-lg shadow-lg border-b-4 ${
+              stock.chg_percentage > 0 ? 'border-green-500' : 'border-red-500'
+            } relative`}
+          >
+            {/* Stock Ticker */}
+            <span
+              className={`text-xs font-bold px-2 py-1 rounded text-white absolute top-2 left-2 ${
+                stock.chg_percentage > 0 ? 'bg-green-600' : 'bg-red-600'
+              }`}
+            >
+              {stock.stock}
+            </span>
+
+            {/* Stock Name */}
+            <h3 className="mt-6 text-lg font-semibold text-left">{stock.stock_name}</h3>
+
+            {/* Stock Price */}
+            <p className="mt-2 text-3xl font-bold text-left">₹{stock.price}</p>
+
+            {/* Change Percentage */}
+            <div className="flex mt-2">
               <div
-                key={index}
-                className={`p-2 bg-white rounded-lg shadow-lg border-b-4 h-40 w-48 ${
-                  isPositive ? 'border-green-500' : 'border-red-500'
-                } relative flex flex-col justify-between overflow-hidden basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/6`}
+                className={`text-sm font-semibold px-2 py-1 rounded-full ${
+                  stock.chg_percentage > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                }`}
               >
-                {/* Stock Ticker */}
-                <span
-                  aria-label={`${stock.stock} ticker`}
-                  className={`text-xs font-bold px-2 py-1 rounded text-white absolute top-2 ${
-                    isPositive ? 'bg-green-600' : 'bg-red-600'
-                  }`}
-                >
-                  {stock.stock}
-                </span>
-
-                {/* Stock Name */}
-                <h3 className="mt-8 text-lg font-semibold text-left truncate">{stock.stock_name}</h3>
-
-                {/* Stock Price */}
-                <p className="text-3xl font-bold text-left ">₹{stock.price}</p>
-
-                {/* Change Percentage */}
-                <div className="flex">
-                  <div
-                    className={`text-sm font-semibold px-2 py-1 rounded-lg ${
-                      isPositive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                    }`}
-                  >
-                    <span className="mr-1">{isPositive ? '▲' : '▼'}</span>
-                    <span>{Math.abs(stock.chg_percentage)}%</span>
-                  </div>
-                </div>
-
+                <span className="mr-1">{stock.chg_percentage > 0 ? '▲' : '▼'}</span>
+                <span>{Math.abs(stock.chg_percentage)}%</span>
               </div>
-            );
-          })}
-        </div>
-
+            </div>
+          </div>
+        ))}
+      </div>
 
       {/* View More Button */}
       {visibleCount < stockData.length && (
         <div className="flex justify-center mt-8">
           <button
-            className="px-4 py-2 mr-4 text-white bg-gray-600 rounded hover:bg-red-600"
-            onClick={handleViewLess}
-          >
-            View Less
-          </button>
-          <button
-            className="px-4 py-2 text-white bg-gray-600 rounded hover:bg-green-600"
+            className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
             onClick={handleViewMore}
           >
             View More
@@ -119,6 +91,3 @@ const StockData = () => {
 };
 
 export default StockData;
-
-
-
