@@ -31,7 +31,7 @@ const StockDashboard = ({ stockData = [] }) => {
   return (
     <div>
       <StockFilters onFilterChange={handleFilterChange} />
-      <div className="flex flex-wrap justify-center gap-4 px-4 sm:px-8 lg:px-32">
+      <div className="flex flex-wrap justify-center gap-4 px-4 sm:px-32 lg:px-32">
         {filteredStocks && filteredStocks.map((stock, index) => {
           const isPositive = stock.chg_percentage > 0;
           return (
@@ -40,7 +40,7 @@ const StockDashboard = ({ stockData = [] }) => {
               className={`p-2 bg-white rounded-lg shadow-lg border-b-4 ${
                 isPositive ? 'border-green-500' : 'border-red-500'
               } relative flex flex-col justify-between overflow-hidden
-                basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5`}
+                basis-1/3 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5`}
               style={{ height: '150px' }}
             >
               {/* Stock Ticker */}
@@ -54,10 +54,10 @@ const StockDashboard = ({ stockData = [] }) => {
               </span>
 
               {/* Stock Name */}
-              <h3 className="mt-6 text-lg font-semibold text-left truncate">{stock.stock_name}</h3>
+              <h3 className="mt-6 font-semibold text-left truncate text-md">{stock.stock_name}</h3>
 
               {/* Stock Price */}
-              <p className="mt-2 text-3xl font-bold text-left">₹{stock.price}</p>
+              <p className="mt-2 text-xl font-bold text-left">₹{stock.price}</p>
 
               {/* Change Percentage */}
               <div className="flex mt-2">

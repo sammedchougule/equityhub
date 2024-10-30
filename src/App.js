@@ -1,23 +1,4 @@
-// import StockData from './stockData';
-// import './App.css';
-// import StockDashboard from './components/stockDashboard';
 
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <StockDashboard  stockData={stockData} />
-//       {/* <StockData /> */}
-      
-
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import StockDashboard from './components/stockDashboard';
