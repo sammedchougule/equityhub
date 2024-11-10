@@ -2,3 +2,32 @@
   text-align: center;
 }
 
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee-wrapper {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-content {
+  display: flex;
+  gap: -1rem; /* Adjust this to space out your items as needed */
+  animation: marquee 100s linear infinite;
+  white-space: nowrap; /* Ensures no wrapping, just horizontal scrolling */
+  min-width: max-content;
+}
+
