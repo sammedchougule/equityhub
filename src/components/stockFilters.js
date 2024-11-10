@@ -17,7 +17,7 @@ const StockFilters = ({ onFilterChange }) => {
   return (
     <div className="flex items-center mt-4 mb-4 justify-evenly">
       <div className="flex items-center">
-        <label className="mr-2">Price:</label>
+        <label className="mr-2">Price :</label>
         <select
           value={priceFilter}
           onChange={handlePriceChange}
@@ -29,7 +29,7 @@ const StockFilters = ({ onFilterChange }) => {
         </select>
       </div>
       <div className="flex items-center">
-        <label className="mr-2">Change Percentage:</label>
+        <label className="mr-2">Percentage :</label>
         <select
           value={chgPercentageFilter}
           onChange={handleChgPercentageChange}
