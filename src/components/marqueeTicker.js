@@ -52,40 +52,49 @@ const stockData = [
     
 
   const MarqueeTicker = () => {
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
   
+    // Detect scroll and add glass effect
     useEffect(() => {
-      // Set the animation to start only after the page content is fully loaded
-      setIsLoaded(true);
+      const handleScroll = () => {
+        if (window.scrollY > 0) {
+          setIsScrolled(true);
+        } else {
+          setIsScrolled(false);
+        }
+      };
+  
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
     }, []);
   
     return (
-      <div className="py-2 overflow-hidden bg-gray-100">
-        <div
-          className={`marquee-wrapper ${isLoaded ? "block" : "hidden"}`}
-        >
-          <div className="flex marquee-content">
-            {stockData.map((stock, index) => (
-              <div
-                key={index}
-                className="flex items-center px-4 space-x-2 text-sm font-medium text-gray-800"
+      <div
+        className={`${
+          isScrolled ? "glass-effect" : ""
+        } marquee-wrapper`}
+      >
+        <div className="marquee-content">
+          {stockData.map((stock, index) => (
+            <div
+              key={index}
+              className="flex items-center px-4 space-x-2 text-sm font-medium text-gray-800"
+            >
+              <span>{stock.symbol}</span>
+              <span>₹{stock.price.toFixed(2)}</span>
+              <span
+                className={`font-semibold ${
+                  stock.percentage_change > 0 ? "text-green-600" : "text-red-600"
+                }`}
               >
-                <span>{stock.symbol}</span>
-                <span>₹{stock.price.toFixed(2)}</span>
-                <span
-                  className={`font-semibold ${
-                    stock.percentage_change > 0 ? "text-green-600" : "text-red-600"
-                  }`}
-                >
-                  ({stock.percentage_change > 0 ? "+" : ""}
-                  {stock.percentage_change.toFixed(2)}%)
-                </span>
-              </div>
-            ))}
-          </div>
+                ({stock.percentage_change > 0 ? "+" : ""}
+                {stock.percentage_change.toFixed(2)}%)
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     );
   };
-
-export default MarqueeTicker;
+  
+  export default MarqueeTicker;

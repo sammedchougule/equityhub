@@ -7,6 +7,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Frosted Glass Effect */
+.glass-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.2); /* Transparent white background */
+  backdrop-filter: blur(10px); /* The blur effect */
+  padding: 10px 0;
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* Marquee wrapper for smooth scrolling */
+.marquee-wrapper {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+.marquee-content {
+  display: flex;
+  gap: -1rem;
+  animation: marquee 100s linear infinite;
+  white-space: nowrap;
+  min-width: max-content;
+}
+
+/* Keyframes for the marquee effect */
 @keyframes marquee {
   0% {
     transform: translateX(100%);
@@ -16,18 +45,8 @@
   }
 }
 
-.marquee-wrapper {
-  display: flex;
-  width: 100%;
-  overflow: hidden;
-  position: relative;
+/* Adjust the content color */
+.marquee-content .text {
+  color: #333;
+  font-weight: bold;
 }
-
-.marquee-content {
-  display: flex;
-  gap: -1rem; /* Adjust this to space out your items as needed */
-  animation: marquee 100s linear infinite;
-  white-space: nowrap; /* Ensures no wrapping, just horizontal scrolling */
-  min-width: max-content;
-}
-
